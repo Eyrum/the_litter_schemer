@@ -65,3 +65,54 @@
     )
   )
 )
+
+(define multirember
+  (lambda (a lat)
+    (cond
+      ((null? lat)(quote()))
+      ((eq? (car lat) a)(multirember a (cdr lat)))
+      (else
+        (cons (car lat)(multirember a (cdr lat)))
+      )
+    )
+  )
+)
+
+(define multirember-f
+  (lambda (test?)
+    (lambda (a lat)
+      (cond
+        ((null? lat) (quote()))
+        ((test? (car lat) a)((multirember-f test?) a (cdr lat)))
+        (else
+          (cons (car lat) ((multirember-f test?) a (cdr lat)))
+        )
+      )
+    )
+  )
+)
+
+(define multiremberT
+  (lambda (test? lat)
+    (cond
+      ((null? (lat))(quote()))
+      ((test? (car lat))(multiremberT test? (cdr lat)))
+      (else
+        (cons (car lat) (multiremberT test? (cdr lat)))
+      )
+    )
+  )
+)
+
+(define multiinsertLR
+  (lambda (new oldL oldR lat)
+    (cond
+      ((null? lat) (quote()))
+      ((eq? (car lat) oldL)(cons new (cons oldL (multiinsertLR new oldL oldR (cdr lat)))))
+      ((eq? (car lat) oldR)(cons oldR (cons new (multiinsertLR new oldL oldR (cdr lat)))))
+      (else
+        (cons (car lat) (multiinsertLR new oldL oldR (cdr lat)))
+      )
+    )
+  )
+)
